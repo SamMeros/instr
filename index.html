@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Meros International Hospital</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background:#0f172a; color:#e2e8f0; }
+.menu { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100dvh; padding:20px; gap:16px; }
+h1 { font-size:22px; margin-bottom:4px; color:#60a5fa; }
+.sub { font-size:14px; color:#94a3b8; margin-bottom:16px; }
+.btn { display:block; width:100%; max-width:380px; padding:20px 24px; background:#1e40af; color:#fff; text-align:center; text-decoration:none; border-radius:14px; font-size:17px; font-weight:600; transition:background .2s; }
+.btn:hover { background:#1d4ed8; }
+.btn .icon { font-size:28px; display:block; margin-bottom:6px; }
+.viewer { display:none; width:100%; height:100dvh; }
+.viewer iframe { width:100%; height:100%; border:none; }
+.back { position:fixed; top:12px; left:12px; z-index:10; background:#1e40af; color:#fff; border:none; padding:8px 16px; border-radius:8px; font-size:14px; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<div class="menu" id="menu">
+  <h1>🏥 Meros International</h1>
+  <p class="sub">Выберите документ для просмотра</p>
+  <a class="btn" onclick="openPdf('Meros-International-Hospitalga-xush-kelibsiz%20(1).pdf')">
+    <span class="icon">🏥</span>Hospitalga xush kelibsiz
+  </a>
+  <a class="btn" onclick="openPdf('%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D0%B9_%D0%9A%D0%9E%D0%94_%D0%91%D0%9A%D0%A1.pdf')">
+    <span class="icon">📋</span>Алгоритм действий КОД БКС
+  </a>
+</div>
+
+<div class="viewer" id="viewer">
+  <button class="back" onclick="goBack()">← Назад</button>
+  <iframe id="pdfFrame" allow="fullscreen"></iframe>
+</div>
+
+<script>
+var baseUrl = window.location.origin + window.location.pathname.replace('index.html','');
+
+function openPdf(pdf) {
+  document.getElementById('menu').style.display = 'none';
+  var v = document.getElementById('viewer');
+  v.style.display = 'block';
+  var pdfUrl = baseUrl + pdf;
+  // Google Docs Viewer — работает на всех телефонах
+  document.getElementById('pdfFrame').src = 
+    'https://docs.google.com/viewer?url=' + encodeURIComponent(pdfUrl) + '&embedded=true';
+}
+
+function goBack() {
+  document.getElementById('viewer').style.display = 'none';
+  document.getElementById('menu').style.display = 'flex';
+  document.getElementById('pdfFrame').src = '';
+}
+</script>
+</body>
+</html>
