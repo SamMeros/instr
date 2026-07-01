@@ -23,10 +23,10 @@ h1 { font-size:22px; margin-bottom:4px; color:#60a5fa; }
 <div class="menu" id="menu">
   <h1>🏥 Meros International</h1>
   <p class="sub">Выберите документ для просмотра</p>
-  <a class="btn" onclick="openPdf('Meros-International-Hospitalga-xush-kelibsiz%20(1).pdf')">
+  <a class="btn" id="btn1" href="?doc=1">
     <span class="icon">🏥</span>Hospitalga xush kelibsiz
   </a>
-  <a class="btn" onclick="openPdf('%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D0%B9_%D0%9A%D0%9E%D0%94_%D0%91%D0%9A%D0%A1.pdf')">
+  <a class="btn" id="btn2" href="?doc=2">
     <span class="icon">📋</span>Алгоритм действий КОД БКС
   </a>
 </div>
@@ -37,15 +37,19 @@ h1 { font-size:22px; margin-bottom:4px; color:#60a5fa; }
 </div>
 
 <script>
+var docs = {
+  '1': 'Meros-International-Hospitalga-xush-kelibsiz%20(1).pdf',
+  '2': '%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D0%B9_%D0%9A%D0%9E%D0%94_%D0%91%D0%9A%D0%A1.pdf'
+};
 var baseUrl = window.location.origin + window.location.pathname.replace('index.html','');
 
-function openPdf(pdf) {
+function openPdf(key) {
+  var pdf = docs[key];
+  if (!pdf) return;
   document.getElementById('menu').style.display = 'none';
-  var v = document.getElementById('viewer');
-  v.style.display = 'block';
+  document.getElementById('viewer').style.display = 'block';
   var pdfUrl = baseUrl + pdf;
-  // Google Docs Viewer — работает на всех телефонах
-  document.getElementById('pdfFrame').src = 
+  document.getElementById('pdfFrame').src =
     'https://docs.google.com/viewer?url=' + encodeURIComponent(pdfUrl) + '&embedded=true';
 }
 
@@ -53,6 +57,14 @@ function goBack() {
   document.getElementById('viewer').style.display = 'none';
   document.getElementById('menu').style.display = 'flex';
   document.getElementById('pdfFrame').src = '';
+  history.replaceState(null, '', window.location.pathname);
+}
+
+// Автооткрытие по параметру ?doc=1 или ?doc=2
+var params = new URLSearchParams(window.location.search);
+var doc = params.get('doc');
+if (doc && docs[doc]) {
+  openPdf(doc);
 }
 </script>
 </body>
