@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Программа форума</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { 
+      height: 100%; 
+      overflow: hidden; 
+      background: #2d2d2d; 
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    #viewer {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .fallback {
+      display: none;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .fallback a {
+      color: #6cf;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Основной способ: iframe с PDF.js -->
+  <iframe 
+    id="viewer"
+    src="https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Fraw.githubusercontent.com%2FSamMeros%2Finstr%2Fmain%2FProgramma_foruma.pdf"
+    allowfullscreen>
+  </iframe>
+
+  <div class="fallback" id="fallback">
+    <p>Не удалось загрузить просмотрщик.</p>
+    <p style="margin-top:16px">
+      <a href="https://raw.githubusercontent.com/SamMeros/instr/main/Programma_foruma.pdf">
+        Скачать / открыть PDF напрямую
+      </a>
+    </p>
+  </div>
+
+  <script>
+    const iframe = document.getElementById('viewer');
+    iframe.onerror = function() {
+      iframe.style.display = 'none';
+      document.getElementById('fallback').style.display = 'block';
+    };
+  </script>
+</body>
+</html>
